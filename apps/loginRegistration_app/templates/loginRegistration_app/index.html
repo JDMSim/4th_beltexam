@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login and Registration</title>
+    <style>
+      body{
+        width: 1000px;
+        height: auto;
+      }
+      .main{
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .ui{
+        width: 190px;
+        height: auto;
+        padding-bottom: 10px;
+        padding-left: 10px;
+      }
+      .user_in{
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: top;
+        border: solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="user_in">
+        <h1>Registration</h1>
+        <div class='ui'>
+          <form action="/register" method="post">
+            {% csrf_token %}
+            First Name: <input type="text" name="fname" value="">
+            Last Name: <input type="text" name="lname" value="">
+            Email: <input type="text" name="email" value="">
+            Date of Birth: <input type="date" name="bday" value="">
+            Password: <input type="password" name="pword" value="">
+            Confirm password: <input type="password" name="c_pword" value="">
+            <input type="submit" name="submit" value="Register">
+          </form>
+        </div>
+      </div>
+      <div class="user_in">
+        <h1>Login</h1>
+          <div class='ui'>
+            <form action="/login" method="post">
+              {% csrf_token %}
+              Email: <input type="text" name="email" value="">
+              Password: <input type="password" name="pword" value="">
+              <input type="submit" name="submit" value="Login">
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="messages">
+      {%if res == 'success'%}
+        <p style='color: green'>Registration Successful</p>
+      {%else%}
+        {%if messages%}
+          {%for message in messages%}
+            <p style='color: red'>{{message}}</p>
+          {%endfor%}
+        {%endif%}
+      {%endif%}
+  </body>
+</html>

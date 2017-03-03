@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quotes</title>
+    <style>
+      .quotes{
+        display: inline-block;
+        margin-right: 100px;
+        vertical-align: top;
+      }
+      .new{
+      width: 200px;
+      border: solid;
+      padding: 50px;
+      }
+      .all_quotes{
+        border: solid;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="{% url 'main:logout' %}">Logout</a><hr>
+    <h1 stype = "display: inline">Hello, {{request.session.fname}}!</h1>
+    <div class="quotes">
+      <h2>Quotable Quotes</h2>
+      {% for quote in quotes %}
+      <div class="all_quotes">
+          <textarea name="name" rows="8" cols="20">{{quote.quote}}</textarea>
+          <p>posted by <a href="{% url 'beltexam:user' id=quote.creator.id %}">{{quote.creator.first_name}}</a></p>
+          <form class="" action="{% url 'beltexam:add' id=quote.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="submit" value="Add to My List">
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+  <div class="quotes">
+    <h2>My Favorites</h2>
+      {% for fav_quote in fav_quotes %}
+        <div class="all_quotes">
+          <textarea name="name" rows="8" cols="20">{{fav_quote.quote}}</textarea>
+          <p>posted by <a href="{% url 'beltexam:user' id=fav_quote.creator.id %}">{{fav_quote.creator.first_name}}</a></p>
+          <form class="" action="{% url 'beltexam:remove' id=fav_quote.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="submit" value="Remove from My List">
+          </form>
+        </div>
+      {% endfor %}
+  </div>
+
+  <form class="new" action="{% url 'beltexam:create' %}" method="post">
+    {% csrf_token %}
+    Quoted By: <input type="text" name="qtd_by" value="">
+    Message: <textarea name="msg" rows="5" cols="20"></textarea>
+    <input type="submit" name="submit" value="Submit">
+  </form>
+  </body>
+</html>

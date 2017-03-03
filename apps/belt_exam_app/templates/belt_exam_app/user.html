@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>User</title>
+  </head>
+  <body>
+      <p><a href="{% url 'beltexam:home' %}">Dashboard</a> | <a href="{% url 'main:logout' %}">Logout</a></p><hr>
+    <h2>Posts by {{quotes.first.creator.first_name}}</h2>
+    <h2>Count: {{quotes|length}}</h2>
+    {% for quote in quotes %}
+      <p>{{quote.quoted_by}}: {{quote.quote}}</p>
+    {% endfor %}
+  </body>
+</html>
